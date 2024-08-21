@@ -29,7 +29,12 @@
         emit('close');
       };
   
-      return { videoPlayer, closeModal };
+      return {
+        videoPlayer,
+        closeModal,
+        videoUrl: props.videoUrl, // Using the videoUrl prop
+        visible: props.visible // Using the visible prop
+      };
     },
   });
   </script>
@@ -46,13 +51,13 @@
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    padding: 10px; /* Padding to ensure space around the video */
+    padding: 10px;
   }
   
   .modal-content {
     position: relative;
-    background-color: transparent; /* Remove background color */
-    border: none; /* Remove border */
+    background-color: transparent;
+    border: none;
     max-width: 100%;
     width: 100%;
     max-height: 90vh;
@@ -63,14 +68,11 @@
   
   .close {
     position: absolute;
-    top: -20px;
-    right: 30px;
-    font-size: 56px; /* Increase size for better accessibility */
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
     font-weight: bold;
-    background-color: rgb(51, 51, 51);
-    color: #e6e6e6;
-    border-radius: 8px;
-    padding: 0px 12px;
+    color: #fff;
     cursor: pointer;
     z-index: 1001;
   }
@@ -85,10 +87,9 @@
   video {
     width: 100%;
     height: auto;
-    border-radius: 8px; /* Slightly round corners for a modern look */
+    border-radius: 8px;
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .modal-content {
       width: 100%;
@@ -102,10 +103,7 @@
     }
   
     .close {
-      top: 10px;
-      right: 25px;
-      font-size: 26px; /* Make the close button even larger on mobile */
-      padding: 1px 8px;
+      font-size: 40px;
     }
   }
   </style>

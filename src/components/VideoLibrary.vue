@@ -14,7 +14,7 @@
       <!-- Video Modal -->
       <VideoModal
         v-if="isModalVisible"
-        :videoUrl="currentVideoUrl"
+        :videoUrl="currentVideoUrl || ''"
         :visible="isModalVisible"
         @close="closeModal"
       />
