@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "VideoModal",
@@ -29,41 +29,11 @@ export default defineComponent({
       emit("close");
     };
 
-    const stopVideo = () => {
-      if (videoPlayer.value) {
-        videoPlayer.value.pause();
-        videoPlayer.value.currentTime = 0;
-        closeModal();
-      }
-    };
-
-    onMounted(() => {
-      if (videoPlayer.value) {
-        videoPlayer.value.addEventListener("ended", stopVideo);
-      }
-    });
-
-    onBeforeUnmount(() => {
-      if (videoPlayer.value) {
-        videoPlayer.value.removeEventListener("ended", stopVideo);
-      }
-    });
-
-    watch(
-      () => props.visible,
-      (newValue) => {
-        if (!newValue && videoPlayer.value) {
-          videoPlayer.value.pause();
-          videoPlayer.value.src = "";
-        }
-      }
-    );
-
     return {
       videoPlayer,
       closeModal,
-      videoUrl: props.videoUrl, // Using the videoUrl prop
-      visible: props.visible, // Using the visible prop
+      videoUrl: props.videoUrl,
+      visible: props.visible,
     };
   },
 });
@@ -96,9 +66,9 @@ export default defineComponent({
 
 .close {
   position: absolute;
-  top: 20px;
-  right: 60px;
-  font-size: 50px;
+  top: 15px;
+  right: 20px;
+  font-size: 50px; 
   font-weight: bold;
   color: #fff;
   cursor: pointer;
@@ -135,7 +105,8 @@ video {
   }
 
   .close {
-    display: none; 
+    top: 250px;
+    right: 15px;
   }
 }
 </style>
