@@ -51,16 +51,14 @@ export default defineComponent({
   background-color: rgba(0, 0, 0, 0.8);
   justify-content: center;
   align-items: center;
-  padding: 10px;
 }
 
 .modal-content {
   position: relative;
   background-color: transparent;
   border: none;
-  max-width: 100%;
   width: 100%;
-  max-height: 90vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,9 +66,9 @@ export default defineComponent({
 
 .close {
   position: absolute;
-  top: -15px;
-  right: 40px;
-  font-size: 60px;
+  top: 15px;
+  right: 20px;
+  font-size: 40px;
   font-weight: bold;
   color: #fff;
   cursor: pointer;
@@ -85,37 +83,20 @@ export default defineComponent({
 }
 
 video {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
-  border-radius: 8px;
+  object-fit: contain; /* Ensures the video fits within the container */
+  border-radius: 0;
 }
 
-@media (max-width: 1548px) {
-  .close {
-    top: 10px;
-    right: 40px;
-  }
-}
-
-@media (max-width: 1248px) {
-  .close {
-    top: 5px;
-    right: 25px;
-  }
-}
-
-@media (max-width: 1028px) {
-  .close {
-    top: 5px;
-    right: 25px;
-  }
-}
-
+/* Specific styles for mobile devices */
 @media (max-width: 768px) {
   .modal-content {
+    padding: 0; /* Ensure there's no padding that could reduce the space available for the video */
     width: 100%;
-    height: auto;
-    max-height: 90vh;
+    height: 100%;
   }
 
   video {
@@ -124,9 +105,9 @@ video {
   }
 
   .close {
-    font-size: 38px;
-    top: 8px;
-    right: 30px;
+    font-size: 30px; /* Adjust the size of the close button for smaller screens */
+    top: 10px;
+    right: 15px;
   }
 }
 </style>
