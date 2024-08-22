@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from "vue";
 
 export default defineComponent({
   name: "VideoModal",
@@ -28,6 +28,32 @@ export default defineComponent({
     const closeModal = () => {
       emit("close");
     };
+
+    const disableScroll = () => {
+      document.body.style.overflow = "hidden";
+    };
+
+    const enableScroll = () => {
+      document.body.style.overflow = "";
+    };
+
+    watch(() => props.visible, (newVal) => {
+      if (newVal) {
+        disableScroll(); // Disable scrolling when the modal is visible
+      } else {
+        enableScroll(); // Re-enable scrolling when the modal is hidden
+      }
+    });
+
+    onMounted(() => {
+      if (props.visible) {
+        disableScroll();
+      }
+    });
+
+    onBeforeUnmount(() => {
+      enableScroll(); // Ensure scrolling is re-enabled if the component is destroyed
+    });
 
     return {
       videoPlayer,
