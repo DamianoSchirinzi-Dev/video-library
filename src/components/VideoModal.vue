@@ -131,7 +131,7 @@ video {
   }
 
   .close {
-    top: 250px;
+    top: 180px;
     right: 15px;
   }
 }
