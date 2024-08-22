@@ -124,7 +124,9 @@ video {
   }
 
   .close {
-    display: none;
+    font-size: 38px;
+    top: 8px;
+    right: 30px;
   }
 }
 </style>
