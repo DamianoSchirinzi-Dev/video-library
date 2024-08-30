@@ -7,61 +7,55 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from "vue";
+<script setup lang="ts">
+import {
+  ref,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  defineEmits,
+} from "vue";
 
-export default defineComponent({
-  name: "VideoModal",
-  props: {
-    videoUrl: {
-      type: String,
-      required: true,
-    },
-    visible: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const videoPlayer = ref<HTMLVideoElement | null>(null);
+const props = defineProps<{
+  videoUrl: string;
+  visible: boolean;
+}>();
 
-    const closeModal = () => {
-      emit("close");
-    };
+const emit = defineEmits(["close"]);
 
-    const disableScroll = () => {
-      document.body.style.overflow = "hidden";
-    };
+const videoPlayer = ref<HTMLVideoElement | null>(null);
 
-    const enableScroll = () => {
-      document.body.style.overflow = "";
-    };
+const closeModal = () => {
+  emit("close");
+};
 
-    watch(() => props.visible, (newVal) => {
-      if (newVal) {
-        disableScroll(); // Disable scrolling when the modal is visible
-      } else {
-        enableScroll(); // Re-enable scrolling when the modal is hidden
-      }
-    });
+const disableScroll = () => {
+  document.body.style.overflow = "hidden";
+};
 
-    onMounted(() => {
-      if (props.visible) {
-        disableScroll();
-      }
-    });
+const enableScroll = () => {
+  document.body.style.overflow = "";
+};
 
-    onBeforeUnmount(() => {
-      enableScroll(); // Ensure scrolling is re-enabled if the component is destroyed
-    });
+watch(
+  () => props.visible,
+  (newVal) => {
+    if (newVal) {
+      disableScroll(); // Disable scrolling when the modal is visible
+    } else {
+      enableScroll(); // Re-enable scrolling when the modal is hidden
+    }
+  }
+);
 
-    return {
-      videoPlayer,
-      closeModal,
-      videoUrl: props.videoUrl,
-      visible: props.visible,
-    };
-  },
+onMounted(() => {
+  if (props.visible) {
+    disableScroll();
+  }
+});
+
+onBeforeUnmount(() => {
+  enableScroll(); // Ensure scrolling is re-enabled if the component is destroyed
 });
 </script>
 
@@ -94,7 +88,7 @@ export default defineComponent({
   position: absolute;
   top: 15px;
   right: 20px;
-  font-size: 50px; 
+  font-size: 50px;
   font-weight: bold;
   color: #fff;
   cursor: pointer;

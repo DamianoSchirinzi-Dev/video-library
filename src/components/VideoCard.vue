@@ -14,44 +14,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from "vue";
+<script setup lang="ts">
+import { computed, defineProps, defineEmits } from "vue";
 
-export default defineComponent({
-  name: "VideoCard",
-  props: {
-    video: {
-      type: Object as () => {
-        title: string;
-        description: string;
-        unlockDate: string;
-        thumbnail: string;
-        videoUrl: string;
-      },
-      required: true,
-    },
-    currentDate: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props, { emit }) {
-    const isUnlocked = computed(() => {
-      return new Date(props.currentDate) >= new Date(props.video.unlockDate);
-    });
+const emit = defineEmits(["play-video"]);
+const props = defineProps<{
+  video: {
+    title: string;
+    description: string;
+    unlockDate: string;
+    thumbnail: string;
+    videoUrl: string;
+  };
+  currentDate: string;
+}>();
 
-    const handleClick = () => {
-      if (isUnlocked.value) {
-        emit("play-video", props.video.videoUrl);
-      }
-    };
+const isUnlocked = computed(() => {
+  return new Date(props.currentDate) >= new Date(props.video.unlockDate);
+});
 
-    const thumbnailSrc = computed(() => {
-      return props.video.thumbnail;
-    });
+const handleClick = () => {
+  if (isUnlocked.value) {
+    emit("play-video", props.video.videoUrl);
+  }
+};
 
-    return { isUnlocked, handleClick, thumbnailSrc };
-  },
+const thumbnailSrc = computed(() => {
+  return props.video.thumbnail;
 });
 </script>
 

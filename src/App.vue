@@ -26,7 +26,6 @@ body {
   background-size: 200px 200px; 
   background-position: top left; 
   font-family: 'Poppins', sans-serif; 
-  font-weight: 400; 
   margin: 0;
   padding: 0;
 }
