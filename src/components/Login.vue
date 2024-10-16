@@ -26,26 +26,26 @@
   export default defineComponent({
     name: 'Login',
     emits: ['login-success'],
-    setup(props, { emit }) {
-      const password = ref('');
-      const errorMessage = ref('');
-      const correctPassword = 'WatermelonILoveYou'; 
-  
-      const checkPassword = () => {
+    setup(_, { emit }) {  
+        const password = ref('');
+        const errorMessage = ref('');
+        const correctPassword = 'WatermelonILoveYou'; 
+
+        const checkPassword = () => {
         if (password.value === correctPassword) {
-          emit('login-success');
+            emit('login-success');
         } else {
-          errorMessage.value = 'Incorrect password, please try again.';
+            errorMessage.value = 'Incorrect password, please try again.';
         }
-      };
-  
-      return {
+        };
+
+        return {
         password,
         errorMessage,
         checkPassword
-      };
+        };
     }
-  });
+    });
   </script>
   
   <style scoped>

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import VideoCard from "./VideoCard.vue";
 import VideoModal from "./VideoModal.vue";
 import { storedAssets } from "../assets/StoredAssets.ts";

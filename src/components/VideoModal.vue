@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { defineProps, defineEmits, onMounted, onBeforeUnmount } from "vue";
 
-const props = defineProps<{
+defineProps<{
   videoUrl: string;
   visible: boolean;
 }>();
