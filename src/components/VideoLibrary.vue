@@ -1,22 +1,8 @@
 <template>
   <div class="video-library">
     <div class="header-section">
-      <h1>Video Library</h1>
+      <h1>🌴🌏 Messages from Thaimiano 🌏🌴</h1>
       <h2>{{ timeUntilNextVideo }}</h2>
-
-      <div class="controls-section">
-        <input type="checkbox" id="checkbox" v-model="showInput" />
-        <label for="checkbox">{{
-          showInput ? "Hide Input" : "Show Input"
-        }}</label>
-        <div class="questions-input" v-if="showInput">
-          <p>
-            Ask a yes / no question:
-            <input v-model="question" :disabled="loading" ref="input" />
-          </p>
-          <p>{{ answer }}</p>
-        </div>
-      </div>
     </div>
 
     <div class="video-list">
@@ -40,84 +26,55 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-  import VideoCard from "./VideoCard.vue";
-  import VideoModal from "./VideoModal.vue";
-  import { storedAssets } from "../assets/StoredAssets.ts";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import VideoCard from "./VideoCard.vue";
+import VideoModal from "./VideoModal.vue";
+import { storedAssets } from "../assets/StoredAssets.ts";
 
-  const currentDate = ref(new Date().toISOString().split("T")[0]);
-  const timeUntilNextVideo = ref("");
-  const currentVideoUrl = ref<string | null>(null);
-  const isModalVisible = ref(false);
+const currentDate = ref(new Date().toISOString().split("T")[0]);
+const timeUntilNextVideo = ref("");
+const currentVideoUrl = ref<string | null>(null);
+const isModalVisible = ref(false);
+const videos = ref(storedAssets);
 
-  const showInput = ref(false);
-  const question = ref("");
-  const answer = ref("");
-  const loading = ref(false);
+const updateTimeUntilNextVideo = () => {
+  const nextVideo = videos.value.find(
+    (video) => new Date(video.unlockDate) > new Date(currentDate.value)
+  );
+  
+  if (nextVideo) {
+    const now = new Date();
+    const unlockDate = new Date(nextVideo.unlockDate);
+    const timeDiff = unlockDate.getTime() - now.getTime();
 
-  const input = ref(null);
-
-  watch(question, async (newQuestion, oldQuestion) => {
-    if (newQuestion.includes("?")) {
-      console.log("Updating: " + oldQuestion);
-      loading.value = true;
-      answer.value = "Thinking...";
-
-      try {
-        const response = await fetch("https://yesno.wtf/api");
-        answer.value = (await response.json()).answer;
-      } catch (error) {
-        answer.value = "Error fetching data";
-      } finally {
-        loading.value = false;
-      }
+    if (timeDiff > 0) {
+      const hours = Math.floor((timeDiff % 86400000) / 3600000);
+      const minutes = Math.floor((timeDiff % 3600000) / 60000);
+      const seconds = Math.floor((timeDiff % 60000) / 1000);
+      timeUntilNextVideo.value = `Next video unlocks in ${hours}h ${minutes}m ${seconds}s`;
     } else {
-      answer.value = "A question should have a question mark! (?)";
+      timeUntilNextVideo.value = "The next video is available now!";
     }
-  });
+  } else {
+    timeUntilNextVideo.value = "All videos are available.";
+  }
+};
 
-  const videos = ref(storedAssets);
+onMounted(() => {
+  updateTimeUntilNextVideo();
+  const intervalId = setInterval(updateTimeUntilNextVideo, 1000);
+  onUnmounted(() => clearInterval(intervalId));
+});
 
-  const nextVideo = computed(() => {
-    return videos.value.find(
-      (video) => new Date(video.unlockDate) > new Date(currentDate.value)
-    );
-  });
+const playVideo = (videoUrl: string) => {
+  currentVideoUrl.value = videoUrl; // Set YouTube embed URL
+  isModalVisible.value = true;
+};
 
-  const updateTimeUntilNextVideo = () => {
-    if (nextVideo.value) {
-      const now = new Date();
-      const unlockDate = new Date(nextVideo.value.unlockDate);
-      const timeDiff = unlockDate.getTime() - now.getTime();
-
-      if (timeDiff > 0) {
-        const hours = Math.floor((timeDiff % 86400000) / 3600000);
-        const minutes = Math.floor((timeDiff % 3600000) / 60000);
-        const seconds = Math.floor((timeDiff % 60000) / 1000);
-        timeUntilNextVideo.value = `Next video unlocks in ${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        timeUntilNextVideo.value = "The next video is available now!";
-      }
-    } else {
-      timeUntilNextVideo.value = "All videos are available.";
-    }
-  };
-
-  onMounted(() => {
-    updateTimeUntilNextVideo();
-    const intervalId = setInterval(updateTimeUntilNextVideo, 1000);
-    onUnmounted(() => clearInterval(intervalId));
-  });
-
-  const playVideo = (videoUrl: string) => {
-    currentVideoUrl.value = videoUrl;
-    isModalVisible.value = true;
-  };
-
-  const closeModal = () => {
-    isModalVisible.value = false;
-    currentVideoUrl.value = null;
-  };
+const closeModal = () => {
+  isModalVisible.value = false;
+  currentVideoUrl.value = null;
+};
 </script>
 
 <style scoped>
@@ -126,14 +83,14 @@
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  background-color: rgba(230, 230, 230, 0.8);
+  background-color: rgba(194, 195, 193, 0.8);
 }
 .header-section {
   font-size: 20px;
   padding: 10px 0px 25px 0px;
   margin: 0px 20px 40px 20px;
   border-radius: 20px;
-  background-color: rgba(68, 145, 180, 0.9);
+  background-color: rgba(210, 100, 182, .85);
 }
 .video-list {
   display: grid;
@@ -149,6 +106,10 @@ input[type="checkbox"] {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .header-section {
+  font-size: 10px;
+  }
+
   .video-list {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }

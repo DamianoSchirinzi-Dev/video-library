@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, defineEmits } from "vue";
+import { computed, defineProps } from "vue";
 
 const emit = defineEmits(["play-video"]);
 const props = defineProps<{
@@ -35,7 +35,7 @@ const isUnlocked = computed(() => {
 
 const handleClick = () => {
   if (isUnlocked.value) {
-    emit("play-video", props.video.videoUrl);
+    emit("play-video", props.video.videoUrl); // Directly emit YouTube embed URL
   }
 };
 
@@ -48,7 +48,7 @@ const thumbnailSrc = computed(() => {
 .video-card {
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, .8);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;

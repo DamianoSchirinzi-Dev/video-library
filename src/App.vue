@@ -1,18 +1,35 @@
 <template>
   <div id="app">
-    <VideoLibrary />
+    <div v-if="isLoggedIn">
+      <VideoLibrary />
+    </div>
+    <Login v-else @login-success="handleLoginSuccess" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import VideoLibrary from './components/VideoLibrary.vue';
+import Login from './components/Login.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     VideoLibrary,
+    Login
   },
+  setup() {
+    const isLoggedIn = ref(false);
+
+    const handleLoginSuccess = () => {
+      isLoggedIn.value = true;
+    };
+
+    return {
+      isLoggedIn,
+      handleLoginSuccess
+    };
+  }
 });
 </script>
 

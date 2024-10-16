@@ -1,20 +1,19 @@
 <template>
-  <div v-if="visible" class="modal">
+  <div v-if="visible" class="modal" @click.self="closeModal">
     <div class="modal-content">
-      <span class="close" @click="closeModal">&times;</span>
-      <video ref="videoPlayer" controls autoplay :src="videoUrl"></video>
+       <iframe
+        v-if="videoUrl"
+        :src="videoUrl"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  defineEmits,
-} from "vue";
+import { defineProps, defineEmits, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps<{
   videoUrl: string;
@@ -23,39 +22,23 @@ const props = defineProps<{
 
 const emit = defineEmits(["close"]);
 
-const videoPlayer = ref<HTMLVideoElement | null>(null);
-
 const closeModal = () => {
   emit("close");
 };
 
-const disableScroll = () => {
-  document.body.style.overflow = "hidden";
-};
-
-const enableScroll = () => {
-  document.body.style.overflow = "";
-};
-
-watch(
-  () => props.visible,
-  (newVal) => {
-    if (newVal) {
-      disableScroll(); // Disable scrolling when the modal is visible
-    } else {
-      enableScroll(); // Re-enable scrolling when the modal is hidden
-    }
+// Close modal on Escape key
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') {
+    closeModal();
   }
-);
+};
 
 onMounted(() => {
-  if (props.visible) {
-    disableScroll();
-  }
+  document.addEventListener('keydown', handleKeydown);
 });
 
 onBeforeUnmount(() => {
-  enableScroll(); // Ensure scrolling is re-enabled if the component is destroyed
+  document.removeEventListener('keydown', handleKeydown);
 });
 </script>
 
@@ -77,8 +60,8 @@ onBeforeUnmount(() => {
   position: relative;
   background-color: transparent;
   border: none;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,38 +78,9 @@ onBeforeUnmount(() => {
   z-index: 1001;
 }
 
-.close:hover,
-.close:focus {
-  color: #f00;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-video {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain; /* Ensures the video fits within the container */
-  border-radius: 0;
-}
-
-/* Specific styles for mobile devices */
-@media (max-width: 768px) {
-  .modal-content {
-    padding: 0; /* Ensure there's no padding that could reduce the space available for the video */
-    width: 100%;
-    height: 100%;
-  }
-
-  video {
-    width: 100%;
-    height: auto;
-  }
-
-  .close {
-    top: 150px;
-    right: 10px;
-  }
+iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
 }
 </style>
