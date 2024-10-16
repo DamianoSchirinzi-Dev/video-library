@@ -53,17 +53,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Aligns items to the top */
     height: 100vh;
     text-align: center;
     background-color: rgba(230, 230, 230, 0.6); 
     color: rgb(0, 0, 0);
-    padding: 20px;
+    padding-top: 50px; /* Adds space at the top */
+    padding-bottom: 20px;
     border-radius: 10px;
-  }
+    }
   
   .header-section {
-    font-size: 20px;
+    font-size: 12px;
     padding: 10px 20px 25px 20px;
     margin: 0px 20px 40px 20px;
     border-radius: 20px;

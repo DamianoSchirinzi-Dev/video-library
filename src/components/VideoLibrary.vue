@@ -107,7 +107,7 @@ input[type="checkbox"] {
 /* Responsive Design */
 @media (max-width: 768px) {
   .header-section {
-  font-size: 10px;
+  font-size: 12px;
   }
 
   .video-list {
