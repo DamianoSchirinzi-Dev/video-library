@@ -87,7 +87,7 @@ const closeModal = () => {
 }
 .header-section {
   font-size: 20px;
-  padding: 10px 0px 25px 0px;
+  padding: 10px 20px;
   margin: 0px 20px 40px 20px;
   border-radius: 20px;
   background-color: rgba(210, 100, 182, .85);
