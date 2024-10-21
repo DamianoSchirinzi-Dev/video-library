@@ -29,7 +29,7 @@
     setup(_, { emit }) {  
         const password = ref('');
         const errorMessage = ref('');
-        const correctPassword = 'WatermelonILoveYou'; 
+        const correctPassword = 'watermeloniloveyou'; 
 
         const checkPassword = () => {
         if (password.value === correctPassword) {

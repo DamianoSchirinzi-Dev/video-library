@@ -22,7 +22,7 @@ export interface Video {
       description: 'I am off tomorrow, I hope these videos help get you through our time apart 💓',
       unlockDate: '2024-08-29',
       thumbnail: thumbnail_1,
-      videoUrl: 'https://youtube.com/embed/xaMwy5Gx9xE',
+      videoUrl: 'https://www.youtube.com/embed/z97l7SRbRVk', 
     },
     {
       title: '🛩️ The first day 🛩️',
