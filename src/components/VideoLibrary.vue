@@ -83,7 +83,7 @@ const closeModal = () => {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  background-color: rgba(194, 195, 193, 0.8);
+  background-color: rgba(240, 240, 240, 0.582);
 }
 .header-section {
   font-size: 20px;
