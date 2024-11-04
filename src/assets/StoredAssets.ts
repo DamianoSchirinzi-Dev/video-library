@@ -43,7 +43,7 @@ export interface Video {
       description: 'Having had survived the flights, a pretty Italian man navigates the city of Bangkok 👀',
       unlockDate: '2024-11-04',
       thumbnail: thumbnail_4,
-      videoUrl: 'https://youtube.com/embed/kg2hpRbfOzM https://youtu.be/kg2hpRbfOzM',
+      videoUrl: 'https://youtube.com/embed/kg2hpRbfOzM',
     },
     {
       title: '🤯 Bangkok #2 🤯',
